@@ -9,23 +9,29 @@ import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Properties;
 
 public abstract class PageObject {
-
     protected AppiumDriver<MobileElement> driver;
+    protected String platform;
     protected final long TIME_OUT = 2;
     protected Loc loc;
 
 
     public PageObject(AppiumDriver<MobileElement> driver) {
         this.driver = driver;
+        this.platform = driver.getCapabilities().getCapability("platformName").toString();
     }
 
     public void waitUntil(ExpectedCondition<?> ec, long timeInSeconds,boolean throwExceptionOnFail) {
@@ -40,16 +46,10 @@ public abstract class PageObject {
         }
     }
 
-    protected MobileElement findElement(By by, long timeoutSec){
-        WebDriverWait wait = new WebDriverWait(driver,timeoutSec);
-        wait.until((d)->d.findElement(by).isDisplayed());
-        return  wait.until((d)->d.findElement(by));
-    }
-    protected void click(By by,long timeoutSec){
-        findElement(by,timeoutSec).click();
-    }
     protected void click(By by){
-        findElement(by,TIME_OUT).click();
+        waitUntil(ExpectedConditions.elementToBeClickable(by),60,true);
+        driver.findElement(by).click();
+
     }
 
 
@@ -65,7 +65,27 @@ public abstract class PageObject {
 
     public By by(String loc, Map<String, String> placeHolderValues) {
 
-        String parts[] = Arrays.stream(this.loc.getProperty(loc).split("\\|", 2)).map(String::trim).toArray(String[]::new);
+        String property = null;
+        FileInputStream fis = null;
+
+        try {
+            String locatorFile = "loc/"+this.platform +"/"+ this.getClass().getSimpleName();
+            fis = new FileInputStream(getClass().getClassLoader().getResource(locatorFile).getFile());
+            Properties properties = new Properties();
+            properties.load(fis);
+            property = (String)properties.get(loc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String parts[] = Arrays.stream(property.split("\\|", 2)).map(String::trim).toArray(String[]::new);
+//        String parts[] = Arrays.stream(this.loc.getProperty(loc).split("\\|", 2)).map(String::trim).toArray(String[]::new);
 //        if (placeHolderValues != null)
 //            for (String key : placeHolderValues.keySet()) {
 //                parts[1] = parts[1].replace("${" + key + "}", placeHolderValues.get(key));

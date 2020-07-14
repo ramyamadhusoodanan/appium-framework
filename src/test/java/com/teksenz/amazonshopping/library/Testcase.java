@@ -19,10 +19,6 @@ public class Testcase {
     private String app;
 
 
-    @BeforeSuite
-    public void beforeSuite(){
-
-    }
 
 
     @Parameters({"host","appWaitActivity", "platformName", "deviceName", "app"})

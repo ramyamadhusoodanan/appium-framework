@@ -3,6 +3,7 @@ package com.teksenz.amazonshopping.pom;
 import com.teksenz.amazonshopping.library.PageObject;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class SignInPage extends PageObject {
@@ -11,6 +12,7 @@ public class SignInPage extends PageObject {
         super(driver);
     }
 
+    @Step("Skip sign-in process")
     public void tapSkipSignIn(){
         try{
             waitUntil(ExpectedConditions.visibilityOfElementLocated(by("label.amazone")),30,false);
