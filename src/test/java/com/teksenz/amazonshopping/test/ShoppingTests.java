@@ -30,8 +30,8 @@ public class ShoppingTests extends Testcase {
         srp.tapEbookReadersAndAccessories();
 
         EbookReadersPage erp = new EbookReadersPage(driver);
-//        erp.selectFirstProductFromTopRated();
-//        erp.validateselectedProductIsInStock();
+        erp.selectFirstProductFromTopRated();
+        erp.validateselectedProductIsInStock();
 
     }
 

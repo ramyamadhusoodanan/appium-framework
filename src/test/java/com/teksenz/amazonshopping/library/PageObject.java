@@ -1,12 +1,12 @@
 package com.teksenz.amazonshopping.library;
 
-import com.teksenz.amazonshopping.pom.SignInPage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 
@@ -28,6 +28,7 @@ public abstract class PageObject {
     protected AppiumDriver<MobileElement> driver;
     protected String platform;
     protected final long TIME_OUT = 2;
+    final static Logger logger = Logger.getLogger(PageObject.class);
 
 
     public PageObject(AppiumDriver<MobileElement> driver) {
@@ -35,7 +36,7 @@ public abstract class PageObject {
         this.platform = driver.getCapabilities().getCapability("platformName").toString();
     }
 
-    public void waitUntil(ExpectedCondition<?> ec, long timeInSeconds,boolean throwExceptionOnFail) {
+    public void waitUntil(ExpectedCondition<?> ec, long timeInSeconds, boolean throwExceptionOnFail) {
 
         try {
             new WebDriverWait(driver, timeInSeconds)
@@ -47,15 +48,15 @@ public abstract class PageObject {
         }
     }
 
-    protected void click(By by){
-        waitUntil(ExpectedConditions.elementToBeClickable(by),60,true);
+    protected void click(By by) {
+        waitUntil(ExpectedConditions.elementToBeClickable(by), 60, true);
         driver.findElement(by).click();
 
     }
 
 
     protected void waitTillElementDisplayed(By by, long timeoutSec) {
-        WebDriverWait wait = new WebDriverWait(driver,timeoutSec);
+        WebDriverWait wait = new WebDriverWait(driver, timeoutSec);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 
     }
@@ -70,11 +71,11 @@ public abstract class PageObject {
         FileInputStream fis = null;
 
         try {
-            String locatorFile = "loc/"+this.platform +"/"+ this.getClass().getSimpleName();
+            String locatorFile = "loc/" + this.platform + "/" + this.getClass().getSimpleName();
             fis = new FileInputStream(getClass().getClassLoader().getResource(locatorFile).getFile());
             Properties properties = new Properties();
             properties.load(fis);
-            property = (String)properties.get(loc);
+            property = (String) properties.get(loc);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -86,12 +87,6 @@ public abstract class PageObject {
         }
 
         String parts[] = Arrays.stream(property.split("\\|", 2)).map(String::trim).toArray(String[]::new);
-//        String parts[] = Arrays.stream(this.loc.getProperty(loc).split("\\|", 2)).map(String::trim).toArray(String[]::new);
-//        if (placeHolderValues != null)
-//            for (String key : placeHolderValues.keySet()) {
-//                parts[1] = parts[1].replace("${" + key + "}", placeHolderValues.get(key));
-//            }
-
 
         if (parts[0].equalsIgnoreCase("name")) {
             return By.name(parts[1]);
@@ -117,7 +112,7 @@ public abstract class PageObject {
         return null;
     }
 
-    public static void sleep(long mSec){
+    public static void sleep(long mSec) {
         try {
             Thread.sleep(mSec);
         } catch (InterruptedException e) {
@@ -126,20 +121,23 @@ public abstract class PageObject {
 
     }
 
+    //Perform Scroll
     public void scroll() {
         Dimension dimensions = driver.manage().window().getSize();
         int Startpoint = (int) (dimensions.getHeight() * 0.7);
-        int scrollEnd = (int) (dimensions.getHeight() * 0.3);
+        int scrollEnd = (int) (dimensions.getHeight() * 0.1);
         int mid = (int) (dimensions.getWidth() * 0.5);
         new TouchAction(driver).press(PointOption.point(mid, Startpoint)).waitAction(WaitOptions.waitOptions(Duration.ofMillis(1000))).moveTo(PointOption.point(mid, scrollEnd)).release().perform();
 
         sleep(2000);
-        System.out.println("scroll");
+        logger.info("scroll");
     }
 
     public boolean isElementPresent(By by) {
         return driver.findElements(by).size() > 0;
     }
+
+//Scroll till element is present
 
     public MobileElement scrollTillElementPresent(By by, int limit) {
         int count = 0;
@@ -154,73 +152,5 @@ public abstract class PageObject {
 
     }
 
-
-
-
-
-
-
-
 }
-
-//    protected WebElement findElement(By by){
-//        return findElement(by, TIME_OUT);
-//    }
-//    protected WebElement findElement(By parent, By child,long timeoutSec) {
-//        WebElement weParent = findElement(parent,timeoutSec);
-//        return weParent.findElement(child);
-//    }
-//    protected WebElement findElement(By parent, By child) {
-//        return findElement(parent,child, TIME_OUT);
-//    }
-//
-//    protected MobileElement findElement(MobileElement me, long timeoutSec) {
-//        WebDriverWait wait = new WebDriverWait(driver,timeoutSec);
-//        return wait.until(ExpectedConditions.elementToBeClickable(me));
-//    }
-//    protected WebElement findElement(WebElement we) {
-//        return findElement(we, TIME_OUT);
-//    }
-//
-//
-
-//    protected void click(WebElement webElement){
-//        click(webElement, TIME_OUT);
-//    }
-//
-//    protected void setCheckBox(WebElement webElement, boolean check, long timeoutSec){
-//        webElement = findElement(webElement, timeoutSec);
-//        if((check && !webElement.isSelected()) || (!check && webElement.isSelected())){
-//            webElement.click();
-//        }
-//    }
-//    protected void setCheckBox(WebElement webElement, boolean check){
-//        setCheckBox(webElement,check, TIME_OUT);
-//    }
-//    protected void sendkeys(WebElement webElement,String keys,long timeoutSec){
-//        findElement(webElement,timeoutSec).sendKeys(keys);
-//    }
-//    protected void sendkeys(WebElement webElement,String keys){
-//        sendkeys(webElement,keys, TIME_OUT);
-//    }
-//    protected void selectFromList(WebElement we, String visibleText, long timeoutSec) {
-//        we = findElement(we,timeoutSec);
-//        Select select = new Select(we);
-//        select.selectByVisibleText(visibleText);
-//    }
-//    protected void selectFromList(WebElement we, String visibleText) {
-//        selectFromList(we,visibleText, TIME_OUT);
-//    }
-//    protected boolean isDisplayed(WebElement we){
-//        try {
-//            findElement(we,TIME_OUT);
-//            return true;
-//        }catch (Exception exc){
-//            return false;
-//        }
-//    }
-//    protected String getText(WebElement we){
-//        return findElement(we).getText();
-//    }
-
 

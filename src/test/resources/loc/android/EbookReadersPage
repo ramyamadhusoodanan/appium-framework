@@ -5,6 +5,6 @@ link.first_top_rated_product = xpath|(//*[@text='Top rated']//following::android
 ##Validate that the product is in stock
 
 link.image = xpath|//android.widget.Image
-text.in_stock = xpath|//*[@text='In Stock.']
+text.in_stock = xpath|//*[@text='In Stock.' or contains(@text, 'in stock')]
 
 
