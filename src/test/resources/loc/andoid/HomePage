@@ -1,0 +1,8 @@
+link.search = id|com.amazon.mShop.android.shopping:id/rs_search_src_text
+button.burger_icon = id|com.amazon.mShop.android.shopping:id/chrome_action_bar_burger_icon
+link.shop_by_department = xpath|//*[@text='Shop by Department']
+logo.home = id|com.amazon.mShop.android.shopping:id/chrome_action_bar_home_logo
+hdr.shop_by_department = id|com.amazon.mShop.android.shopping:id/gno_second_level_header
+link.electronics = xpath|//*[@text='Electronics']
+
+

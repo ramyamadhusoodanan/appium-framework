@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Amazon Testsuite - Android" verbose="1" >
+    <test name="RegressionSuite" >
+        <parameter name="host" value="http://0.0.0.0:4723/wd/hub"/>
+        <parameter name="appWaitActivity" value="com.amazon.mShop.sso.SigninPromptActivity"/>
+        <parameter name="platformName" value="android"/>
+        <parameter name="deviceName" value="521068f651c94423"/>
+        <parameter name="app" value="/Users/ramya/Downloads/Amazon_Shopping-16.3.0.100.apk"/>
+        <classes>
+            <class name="com.teksenz.amazonshopping.test.ShoppingTests" />
+        </classes>
+    </test>
+</suite>
+

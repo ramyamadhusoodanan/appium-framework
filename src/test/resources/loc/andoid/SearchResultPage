@@ -1,0 +1,2 @@
+hdr.electronic_stores = xpath|//*[@text='Electronics Store']
+link.ebook_accessories =xpath|//*[starts-with(@text,'eBook Readers')]

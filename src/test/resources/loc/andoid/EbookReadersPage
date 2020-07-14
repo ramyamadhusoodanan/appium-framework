@@ -1,0 +1,10 @@
+hdr.text= xpath|//*[starts-with(@text,'eBook Readers')]
+txt.top_rated =xpath|//*[@text='Top rated']
+link.first_top_rated_product = xpath|(//*[@text='Top rated']//following::android.widget.Image)[1]
+
+##Validate that the product is in stock
+
+link.image = xpath|//android.widget.Image
+text.in_stock = xpath|//*[@text='In Stock.']
+
+

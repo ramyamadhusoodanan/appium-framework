@@ -1,0 +1,3 @@
+label.amazone = id|com.amazon.mShop.android.shopping:id/sso_splash_logo
+label.sign_in_to_account= xpath|//*[@text='Sign in to your account']
+button.skip_signin =id|com.amazon.mShop.android.shopping:id/skip_sign_in_button
