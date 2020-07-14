@@ -3,7 +3,8 @@
 
 # Log file
 *.log
-
+/log/
+/allure-results/
 
 
 # Package Files #

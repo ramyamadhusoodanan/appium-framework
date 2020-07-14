@@ -1,11 +1,13 @@
 package com.teksenz.amazonshopping.library;
 
+import com.teksenz.amazonshopping.pom.SignInPage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.Dimension;
@@ -26,7 +28,6 @@ public abstract class PageObject {
     protected AppiumDriver<MobileElement> driver;
     protected String platform;
     protected final long TIME_OUT = 2;
-    protected Loc loc;
 
 
     public PageObject(AppiumDriver<MobileElement> driver) {

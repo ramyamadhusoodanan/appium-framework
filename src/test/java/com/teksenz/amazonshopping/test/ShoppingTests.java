@@ -8,13 +8,16 @@ import com.teksenz.amazonshopping.pom.SearchResultPage;
 import com.teksenz.amazonshopping.pom.SignInPage;
 
 
+import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 
 public class ShoppingTests extends Testcase {
+    final static Logger logger = Logger.getLogger(ShoppingTests.class);
 
     @Test(description = "Verify if the selected product is available in stock")
     public void verifyProductAvailability(){
+        logger.info("Test started - verifyProductAvailability");
         SignInPage si = new SignInPage(driver);
         si.tapSkipSignIn();
 
